@@ -20,18 +20,24 @@ class SerialGenerator:
 
     def __init__(self, start=100):
         """ Create serial number generator from number passed """
-        self.start = start - 1
-        self.original_start = start - 1
+        self.start = start
+        self.current_num = start
+        self.counter = 0
 
     def __repr__(self):
-        return f"""<Serial Generator start={self.start}
-            and original_start={self.original_start}"""
+        return f"""<Serial Generator start={self.start},
+        current_num={self.current_num}, and counter={self.counter}"""
 
     def generate(self):
         """ Returns the next sequential number """
-        self.start += 1
-        return self.start
+        self.counter += 1
+        if self.counter > 1:
+            self.current_num += 1
+            return self.current_num
+        else:
+            return self.current_num
 
     def reset(self):
-        """ Resets start to the original start value"""
-        self.start = self.original_start
+        """ Resets start to the original start value and counter to 0"""
+        self.current_num = self.start
+        self.counter = 0
