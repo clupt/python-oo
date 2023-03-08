@@ -13,7 +13,8 @@ class WordFinder:
         """ Creates a new instance of WordFinder """
 
         self.words_list = self.get_list_of_words_from_file(path_to_txt_file)
-        self.num_of_words_read = len(self.words_list)
+        # TODO: get rid of 16 and len(self.words_list) rename words_list to words
+        # self.num_of_words_read = len(self.words_list)
         print(f"{self.num_of_words_read} words read")
 
     def __repr__(self):
@@ -21,7 +22,7 @@ class WordFinder:
 
     def get_list_of_words_from_file(self, path_to_txt_file):
         """ Generates a list of words from a text file """
-        words_list = []
+        words_list = []  # TODO: could be a list comprehension
         file = open(path_to_txt_file)
 
         for line in file:
@@ -39,9 +40,9 @@ class SpecialWordFinder(WordFinder):
     """SpecialWordFinder: filters out comments and blank lines,
      returns random word """
 
-    def __init__(self, path_to_txt_file):
-        """ Extends from WordFinder, creates SpecialWordFinder"""
-        super().__init__(path_to_txt_file)
+    # def __init__(self, path_to_txt_file):
+    #     """ Extends from WordFinder, creates SpecialWordFinder"""
+    #     super().__init__(path_to_txt_file)
 
     def __repr__(self):
         return f"<SpecialWordFinder path_to_txt_file={self.path_to_txt_file}>"
@@ -51,11 +52,10 @@ class SpecialWordFinder(WordFinder):
         # TODO: how to properly extend from super on longer methods
         # super().get_list_of_words_from_file() + ?
         words_list = []
-        file = open(path_to_txt_file)
 
-        for line in file:
-            if not line.strip() == '' and not line.startswith('#'):
-                word = str(line.rstrip())
+        for line in super().get_list_of_words_from_file(path_to_txt_file):
+            if not line == '' and not line.startswith('#'):
+                word = line
                 words_list.append(word)
 
         return words_list
